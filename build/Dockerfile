@@ -1,6 +1,6 @@
 FROM debian:bullseye-slim
 
-RUN apt update && apt install -y curl gnupg lsb-release
+RUN apt update && apt install -y curl gnupg lsb-release iputils-ping
 
 RUN curl -s https://deb.frrouting.org/frr/keys.asc | apt-key add -
 
