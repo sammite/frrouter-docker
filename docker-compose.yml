@@ -1,0 +1,10 @@
+version: "3"
+services:
+        frrouter1:
+                container_name: frrouter1
+                image: frrouter-docker
+                command: 'sh -c "/etc/init.d/frr start"'
+        frrouter2:
+                container_name: frrouter2
+                image: frrouter-docker
+                command: 'sh -c "/etc/init.d/frr start"'
