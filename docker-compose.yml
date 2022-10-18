@@ -1,10 +1,11 @@
 version: "3"
 services:
         frrouter1:
+        # Fix start command to not do this
                 container_name: frrouter1
                 image: frrouter-docker
-                command: 'sh -c "/etc/init.d/frr start"'
+                command: 'sh -c "/etc/init.d/frr start && sleep 1d"'
         frrouter2:
                 container_name: frrouter2
                 image: frrouter-docker
-                command: 'sh -c "/etc/init.d/frr start"'
+                command: 'sh -c "/etc/init.d/frr start && sleep 1d"'
