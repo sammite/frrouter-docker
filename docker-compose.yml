@@ -1,27 +1,37 @@
 version: "3"
 services:
         frrouter1:
-        # Fix start command to not do this
                 build:
                         context: ./build
                         dockerfile: Dockerfile-frrouter
                 container_name: frrouter1
                 image: frrouter-docker
-                command: 'sh -c "/usr/src/files/orchestrator.sh"'
+                networks:
+                        virt_net:
+                                ipv4_address: 10.10.0.2
                 volumes: 
                         - ./files:/usr/src/files
                         - ./configs/frrouter1:/usr/src/config
                 cap_add:
                        - NET_ADMIN
+                command: 'sh -c "/usr/src/files/orchestrator.sh"'
         frrouter2:
                 build:
                         context: ./build
                         dockerfile: Dockerfile-frrouter
                 container_name: frrouter2
                 image: frrouter-docker
-                command: 'sh -c "/usr/src/files/orchestrator.sh"'
+                networks:
+                        virt_net:
+                                ipv4_address: 10.10.0.3
                 volumes: 
                         - ./files:/usr/src/files
                         - ./configs/frrouter2:/usr/src/config
                 cap_add:
                        - NET_ADMIN
+                command: 'sh -c "/usr/src/files/orchestrator.sh"'
+networks:
+        virt_net:
+                ipam:
+                        config:
+                                - subnet: 10.10.0.0/24
