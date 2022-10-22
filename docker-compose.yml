@@ -7,7 +7,10 @@ services:
                         dockerfile: Dockerfile-frrouter
                 container_name: frrouter1
                 image: frrouter-docker
-                command: 'sh -c "/etc/init.d/frr start && sleep 1d"'
+                command: 'sh -c "/usr/src/files/orchestrator.sh"'
+                volumes: 
+                        - ./files:/usr/src/files
+                        - ./configs/frrouter1:/usr/src/config
                 cap_add:
                        - NET_ADMIN
         frrouter2:
@@ -16,6 +19,9 @@ services:
                         dockerfile: Dockerfile-frrouter
                 container_name: frrouter2
                 image: frrouter-docker
-                command: 'sh -c "/etc/init.d/frr start && sleep 1d"'
+                command: 'sh -c "/usr/src/files/orchestrator.sh"'
+                volumes: 
+                        - ./files:/usr/src/files
+                        - ./configs/frrouter2:/usr/src/config
                 cap_add:
                        - NET_ADMIN
