@@ -8,3 +8,8 @@ RUN echo deb https://deb.frrouting.org/frr $(lsb_release -s -c) frr-stable |  te
 
 RUN  apt update &&  apt install -y frr frr-pythontools
 
+RUN echo '#FRR service ports' >> /etc/services \ 
+	&& echo 'zebrasrv 2600/tcp # zebra service' >> /etc/services \
+	&& echo 'zebra 2601/tcp # zebra vty' >> /etc/services \
+	&& echo 'ospfd 2604/tcp # OSPFd tty' >> /etc/services 
+
