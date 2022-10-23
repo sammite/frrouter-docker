@@ -6,7 +6,7 @@ no ipv6 forwarding
 service integrated-vtysh-config
 !
 router ospf
- network 10.0.2.0/24 area 0
+ network 10.0.2.0/24 area 2
  network 10.10.0.0/24 area 0
 exit
 !
