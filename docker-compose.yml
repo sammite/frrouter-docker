@@ -54,6 +54,22 @@ services:
                         - ./configs/host1/.env:/usr/src/config/.env
                 command: 'sh -c "/usr/src/files/host-orch.sh"'
 
+        host2:
+                build:
+                        context: ./build
+                        dockerfile: Dockerfile-host
+                container_name: host2
+                networks:
+                        virt_net:
+                                ipv4_address: 10.10.0.6
+                cap_add:
+                       - NET_ADMIN
+                volumes: 
+                        - ./files/host-orch.sh:/usr/src/files/host-orch.sh
+                        - ./configs/host2/.env:/usr/src/config/.env
+                command: 'sh -c "/usr/src/files/host-orch.sh"'
+
+
 
 networks:
         virt_net:
