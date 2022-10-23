@@ -5,33 +5,78 @@ services:
                         context: ./build
                         dockerfile: Dockerfile-frrouter
                 container_name: frrouter1
-                image: frrouter-docker
+                hostname: frrouter1
                 networks:
                         virt_net:
                                 ipv4_address: 10.10.0.2
                 volumes: 
-                        - ./files:/usr/src/files
-                        - ./configs/frrouter1:/usr/src/config
+                        - ./files/orchestrator.sh:/usr/src/files/orchestrator.sh
+                        - ./configs/frrouter1/.env:/usr/src/config/.env
+                        - ./configs/frrouter1/frr/:/etc/frr
                 cap_add:
                        - NET_ADMIN
+                       - NET_BIND_SERVICE
+                       - NET_RAW
+                       - SYS_ADMIN
                 command: 'sh -c "/usr/src/files/orchestrator.sh"'
         frrouter2:
                 build:
                         context: ./build
                         dockerfile: Dockerfile-frrouter
                 container_name: frrouter2
-                image: frrouter-docker
+                hostname: frrouter2
                 networks:
                         virt_net:
                                 ipv4_address: 10.10.0.3
                 volumes: 
-                        - ./files:/usr/src/files
-                        - ./configs/frrouter2:/usr/src/config
+                        - ./files/orchestrator.sh:/usr/src/files/orchestrator.sh
+                        - ./configs/frrouter2/.env:/usr/src/config/.env
+                        - ./configs/frrouter2/frr/:/etc/frr
                 cap_add:
                        - NET_ADMIN
+                       - NET_BIND_SERVICE
+                       - NET_RAW
+                       - SYS_ADMIN
                 command: 'sh -c "/usr/src/files/orchestrator.sh"'
+
+        host1:
+                build:
+                        context: ./build
+                        dockerfile: Dockerfile-host
+                container_name: host1
+                hostname: host1
+                networks:
+                        virt_net:
+                                ipv4_address: 10.10.0.5
+                cap_add:
+                       - NET_ADMIN
+                volumes: 
+                        - ./files/host-orch.sh:/usr/src/files/host-orch.sh
+                        - ./configs/host1/:/usr/src/config/
+                command: 'sh -c "/usr/src/files/host-orch.sh"'
+
+        host2:
+                build:
+                        context: ./build
+                        dockerfile: Dockerfile-host
+                container_name: host2
+                hostname: host2
+                networks:
+                        virt_net:
+                                ipv4_address: 10.10.0.6
+                cap_add:
+                       - NET_ADMIN
+                volumes: 
+                        - ./files/host-orch.sh:/usr/src/files/host-orch.sh
+                        - ./configs/host2/.env:/usr/src/config/.env
+                command: 'sh -c "/usr/src/files/host-orch.sh"'
+
+
+
 networks:
+
         virt_net:
+                driver: "bridge"
                 ipam:
                         config:
                                 - subnet: 10.10.0.0/24

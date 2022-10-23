@@ -1,0 +1,18 @@
+frr version 8.3.1
+frr defaults traditional
+hostname frrouter2
+log syslog informational
+no ipv6 forwarding
+service integrated-vtysh-config
+!
+interface eth0
+ ip ospf authentication
+ ip ospf authentication-key hunter2!
+exit
+!
+router ospf
+ network 10.0.1.0/24 area 0
+ network 10.10.0.0/24 area 0
+ area 0 authentication
+exit
+!
