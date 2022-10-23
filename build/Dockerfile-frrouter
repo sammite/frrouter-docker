@@ -13,3 +13,4 @@ RUN echo '#FRR service ports' >> /etc/services \
 	&& echo 'zebra 2601/tcp # zebra vty' >> /etc/services \
 	&& echo 'ospfd 2604/tcp # OSPFd tty' >> /etc/services 
 
+RUN apt install -y tcpdump

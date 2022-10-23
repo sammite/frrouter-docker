@@ -5,7 +5,7 @@ services:
                         context: ./build
                         dockerfile: Dockerfile-frrouter
                 container_name: frrouter1
-                #image: frrouter-docker
+                hostname: frrouter1
                 networks:
                         virt_net:
                                 ipv4_address: 10.10.0.2
@@ -24,7 +24,7 @@ services:
                         context: ./build
                         dockerfile: Dockerfile-frrouter
                 container_name: frrouter2
-                #image: frrouter-docker
+                hostname: frrouter2
                 networks:
                         virt_net:
                                 ipv4_address: 10.10.0.3
@@ -44,6 +44,7 @@ services:
                         context: ./build
                         dockerfile: Dockerfile-host
                 container_name: host1
+                hostname: host1
                 networks:
                         virt_net:
                                 ipv4_address: 10.10.0.5
@@ -51,7 +52,7 @@ services:
                        - NET_ADMIN
                 volumes: 
                         - ./files/host-orch.sh:/usr/src/files/host-orch.sh
-                        - ./configs/host1/.env:/usr/src/config/.env
+                        - ./configs/host1/:/usr/src/config/
                 command: 'sh -c "/usr/src/files/host-orch.sh"'
 
         host2:
@@ -59,6 +60,7 @@ services:
                         context: ./build
                         dockerfile: Dockerfile-host
                 container_name: host2
+                hostname: host2
                 networks:
                         virt_net:
                                 ipv4_address: 10.10.0.6
@@ -72,7 +74,9 @@ services:
 
 
 networks:
+
         virt_net:
+                driver: "bridge"
                 ipam:
                         config:
                                 - subnet: 10.10.0.0/24
